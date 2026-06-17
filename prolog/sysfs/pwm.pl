@@ -36,7 +36,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             sysfs_pwm_write/4 % +Chip, ?Export, +File, +Data
           ]).
 :- use_module(sysfs).
-:- use_module(sysfs_pwmchip).
+:- use_module(pwmchip).
 :- use_module(read_file).
 :- use_module(write_file).
 
