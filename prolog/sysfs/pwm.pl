@@ -94,13 +94,7 @@ sysfs_pwm_unexport(Chip, Export, Chan) :-
 %   Chip, and returns the corresponding PWM. A PWM channel is exported
 %   by writing its number to the export file of the Chip, which is a
 %   file named export in the directory of the Chip in the sysfs virtual
-%   file system. The Export is a number that identifies the PWM channel,
-%   and the Chan is the absolute path to the file in the sysfs virtual
-%   file system that corresponds to the exported PWM channel, which is
-%   of the form /sys/class/pwm/pwmchipN/pwmM, where N is the number of
-%   the Chip, and M is the number of the exported PWM channel. The
-%   predicate is nondeterministic and can be backtracked to find all
-%   exported PWM channels for the specified Chip.
+%   file system.
 %
 %   @arg Chip is the name of a PWM class device, which is a directory in
 %   the /sys/class/pwm directory that contains a file named `npwm`.
@@ -108,13 +102,8 @@ sysfs_pwm_unexport(Chip, Export, Chan) :-
 %   @arg Export is the number that identifies the exported PWM channel.
 %   This is an integer.
 %
-%   @arg Chan is the absolute path to the file in the sysfs virtual file
-%   system that corresponds to the exported PWM channel. This is
-%   returned as an atom. The absolute path is the directory in the sysfs
-%   virtual file system that corresponds to the exported PWM channel,
-%   and is typically of the form /sys/class/pwm/pwmchipN/pwmM, where N
-%   is the number of the Chip, and M is the number of the exported PWM
-%   channel.
+%   @arg Chan is the "name of the file" in the sysfs virtual file system that
+%   corresponds to the exported PWM channel. This is returned as an atom.
 
 sysfs_pwm_exported(Chip, Export, Chan) :-
     sysfs_pwmchip_path(Chip, Path),
