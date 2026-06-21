@@ -28,7 +28,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 :- module(sysfs_write_file,
           [ write_file_as/2, % +File, +Term
-            write_file_as/3  % +As, +File, -Data
+            write_file_as/3  % +As, +File, +Data
           ]).
 :- autoload(library(dcg/high_order), [sequence//2]).
 :- use_module(endian).
