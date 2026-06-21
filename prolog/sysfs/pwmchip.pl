@@ -179,7 +179,7 @@ file_as(npwm, number).
 file_as(device/name, atom).
 file_as(device/of_node/gpios, gpios).
 
-:- multifile read_file:as/3.
+:- multifile sysfs_read_file:as/3.
 
 % Read the gpios file as a list of gpio(PHandle, GPIOOffset, Flags) terms. The
 % gpios file contains a sequence of big-endian 32-bit integers, where each group
@@ -203,8 +203,8 @@ file_as(device/of_node/gpios, gpios).
 %
 % @arg Flags are additional flags that may be specified in the device tree for
 % the GPIO line. These could indicate properties such as active low, open drain, etc.
-read_file:as(gpios, File, GPIOs) :-
-    read_file:as(bigs(32), File, Bigs),
+sysfs_read_file:as(gpios, File, GPIOs) :-
+    sysfs_read_file:as(bigs(32), File, Bigs),
     gpios(Bigs, GPIOs).
 
 gpios([], []).
