@@ -95,7 +95,7 @@ sysfs_pwm_unexport(Chip, Export, Chan) :-
 %   by writing its number to the export file of the Chip, which is a
 %   file named export in the directory of the Chip in the sysfs virtual
 %   file system. The Export is a number that identifies the PWM channel,
-%   and the PWM is the absolute path to the file in the sysfs virtual
+%   and the Chan is the absolute path to the file in the sysfs virtual
 %   file system that corresponds to the exported PWM channel, which is
 %   of the form /sys/class/pwm/pwmchipN/pwmM, where N is the number of
 %   the Chip, and M is the number of the exported PWM channel. The
