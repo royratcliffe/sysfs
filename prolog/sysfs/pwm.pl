@@ -133,7 +133,9 @@ sysfs_pwm_ensure_exported(Chip, Export, Chan) :-
 %   If already unexported, succeeds. Otherwise, unexports the channel.
 %
 %   @arg Chip PWM class device name (directory in /sys/class/pwm with `npwm`)
+%
 %   @arg Export integer identifying the PWM channel
+%
 %   @arg Chan atom of the form pwmN where N is the channel number
 
 sysfs_pwm_ensure_unexported(Chip, Export, Chan) :-
@@ -197,8 +199,11 @@ sysfs_pwm_read(File, Chip, Export, Data) :-
 %
 %   @arg File is the name of the file to write, such as enable, period,
 %   duty_cycle, polarity, etc.
+%
 %   @arg Chip is the name of the PWM class device, such as pwmchip0, pwmchip1, etc.
+%
 %   @arg Export is the number that identifies the exported PWM channel.
+%
 %   @arg Data is the value to write to the file, and is expected to be an atom
 %   or a number depending on the type of the file. The value will be written to
 %   the file as a string, so if Data is a number, it will be converted to a
