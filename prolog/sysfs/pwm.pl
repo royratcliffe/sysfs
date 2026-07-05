@@ -32,8 +32,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             sysfs_pwm_exported/3, % ?Chip, ?Export, -Chan
             sysfs_pwm_ensure_exported/3, % ?Chip, ?Export, -Chan
             sysfs_pwm_ensure_unexported/3, % ?Chip, ?Export, -Chan
-            sysfs_pwm_read/4, % +Chip, ?Export, +File, -Data
-            sysfs_pwm_write/4 % +Chip, ?Export, +File, +Data
+            sysfs_pwm_read/4, % +File, +Chip, ?Export, -Data
+            sysfs_pwm_write/4, % +File, +Chip, ?Export, +Data
+            sysfs_pwm_chan/3 % ?Chip, ?Export, -Chan
           ]).
 :- use_module(sysfs).
 :- use_module(pwmchip).
@@ -145,7 +146,7 @@ sysfs_pwm_ensure_unexported(Chip, Export, Chan) :-
     ;   true
     ).
 
-%!  sysfs_pwm_read(File, ?Chip, ?Export, -Data) is nondet.
+%!  sysfs_pwm_read(?File, ?Chip, ?Export, -Data) is nondet.
 %
 %   Reads a value from a file in the directory of a PWM channel. The File is the
 %   name of the file to read, such as enable, period, duty_cycle, polarity, etc.
