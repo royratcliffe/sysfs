@@ -119,7 +119,8 @@ as(atom, File, Data) :-
 as(lines, File, Data) :-
     string_lines(String, Data),
     absolute_file_name(File, Abs, [file_errors(fail), access(write)]),
-    write_string_to_file(Abs, String, [file_errors(fail)]),
+    setting(sysfs:line_encoding, Encoding),
+    write_string_to_file(Abs, String, [file_errors(fail), encoding(Encoding)]),
     debug(write(file), 'Wrote string to file: ~w~n~s---', [File, String]).
 as(line, File, Data) :-
     as(lines, File, [Data]).

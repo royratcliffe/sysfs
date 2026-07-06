@@ -133,7 +133,8 @@ as(atom, File, Data) :-
     atom_string(Data, Line).
 as(lines, File, Data) :-
     absolute_file_name(File, Abs, [file_errors(fail), access(read)]),
-    read_file_to_string(Abs, String, [file_errors(fail)]),
+    setting(sysfs:line_encoding, Encoding),
+    read_file_to_string(Abs, String, [file_errors(fail), encoding(Encoding)]),
     debug(read(file), 'Read string from file: ~w~n~s---', [File, String]),
     string_lines(String, Data).
 as(line, File, Data) :-
