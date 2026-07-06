@@ -48,20 +48,20 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 %   arguments are the parameters for that method. The read methods are defined
 %   as follows:
 %
-%       - term: reads the file as a Prolog term. The file should contain a single
+%       - `term`: reads the file as a Prolog term. The file should contain a single
 %         line that represents a Prolog term. The term is unified with the Data
 %         variable.
-%       - bytes: reads the file as a list of bytes (codes). The file is treated as a
+%       - `bytes`: reads the file as a list of bytes (codes). The file is treated as a
 %         binary file, and the contents are unified with the Data variable as a list
 %         of codes.
-%       - number: reads the file as a number. The file should contain a single line
+%       - `number`: reads the file as a number. The file should contain a single line
 %         that represents a number. The number is unified with the Data variable.
-%       - atom: reads the file as an atom. The file should contain a single line
+%       - `atom`: reads the file as an atom. The file should contain a single line
 %         that represents an atom. The atom is unified with the Data variable.
-%       - lines: reads the file as a list of lines. The file is treated as a text
+%       - `lines`: reads the file as a list of lines. The file is treated as a text
 %         file, and the contents are unified with the Data variable as a list of
 %         lines (strings).
-%       - line: reads the file as a single line. The file is treated as a text file,
+%       - `line`: reads the file as a single line. The file is treated as a text file,
 %         and the contents are unified with the Data variable as a single line (string).
 %       - bigs(Width): reads the file as a sequence of big-endian integers of the
 %         specified Width (in bits). The file is treated as a binary file, and the
