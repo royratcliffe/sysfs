@@ -108,14 +108,14 @@ true.
 
 `read_file_as/3` and `write_file_as/3` support several formats:
 
-- `term`
-- `bytes`
-- `number`
-- `atom`
-- `line`
-- `lines`
-- `big(Width)`, `bigs(Width)`
-- `little(Width)`, `littles(Width)`
+- as a `term`
+- as `bytes`
+- as a `number`
+- as an `atom`
+- as a `line`
+- as `lines`
+- as `big(Width)`, or `bigs(Width)`
+- as `little(Width)`, or `littles(Width)`
 
 Example:
 
@@ -134,8 +134,8 @@ P = 7.
 
 ## Tests and Examples
 
-- `prolog/gpio_l298.plt`
-- `prolog/pca9685_pcm.plt`
+    - see `prolog/gpio_l298.plt`
+    - see `prolog/pca9685_pcm.plt`
 
 These include practical usage patterns for motor-control and PWM scenarios.
 
