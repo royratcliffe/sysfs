@@ -90,6 +90,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  * @author Roy Ratcliffe
  * @version 1.0
+ * @license MIT
  */
 
 %!  sysfs_pwmchip_path(-Chip, -Path) is nondet.
