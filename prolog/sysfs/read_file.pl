@@ -33,6 +33,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 :- autoload(library(readutil), [read_file_to_string/3, read_file_to_codes/3]).
 :- autoload(library(strings), [string_lines/2]).
 :- autoload(library(dcg/high_order), [sequence//2]).
+:- use_module(library(sysfs), []).
 :- use_module(endian).
 :- use_module(hex).
 

@@ -31,7 +31,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             sysfs_gpiochip_read/2, % +What:compound, +Term:compound
             sysfs_gpiochip_read/3  % ?File, ?Chip, -Data
           ]).
-:- use_module(sysfs).
+:- use_module(library(sysfs)).
 :- use_module(read_file).
 
 /** <module> GPIO Chip Access in sysfs

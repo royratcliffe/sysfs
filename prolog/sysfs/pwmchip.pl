@@ -31,7 +31,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             sysfs_pwmchip_read/2, % +What, +Term
             sysfs_pwmchip_read/3 % +File, +Chip, -Data
           ]).
-:- use_module(sysfs).
+:- use_module(library(sysfs)).
 :- use_module(read_file).
 
 /** <module> Linux sysfs PWM Chip Access

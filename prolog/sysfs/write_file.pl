@@ -31,6 +31,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             write_file_as/3  % +As, +File, +Data
           ]).
 :- autoload(library(dcg/high_order), [sequence//2]).
+:- use_module(library(sysfs), []).
 :- use_module(endian).
 :- use_module(hex).
 

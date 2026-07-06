@@ -26,11 +26,18 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-:- module(sysfs_sysfs,
-          [ sysfs_entry/3, % +Class, -Entry, ?Entries:list
-            sysfs_exported_with_time_limit/3 % +File, -Abs, +Options:list
+:- module(sysfs,
+          [ sysfs_entry/3 % +Class, -Entry, ?Entries:list
+          , sysfs_exported_with_time_limit/3 % +File, -Abs, +Options:list
           ]).
-:- use_module(dcg_files).
+:- use_module(library(sysfs/dcg_files)).
+
+% The line encoding setting specifies the encoding to use when reading and
+% writing files. The default is ASCII, but it can be changed to UTF-8 if needed.
+% This setting is used by the read_file_as/2 and write_file_as/3 predicates to
+% determine how to interpret the contents of the file being read or written.
+:- setting(line_encoding, oneof([ascii, utf8]), ascii,
+           'Line encoding for reading and writing files.').
 
 %!  sysfs_entry(+Class, -Entry, ?Entries:list) is nondet.
 %
