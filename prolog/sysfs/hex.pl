@@ -42,7 +42,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 %! bytes_to_hex(+Bytes, +Delimiter, -HexString) is det.
 % Converts a list of bytes (codes) to a hexadecimal string with a specified
-% delimiter between bytes. The Bytes is a list of codes to convert, Delimiter is
+% delimiter between bytes. The Bytes argument is a list of codes to convert, Delimiter is
 % the string to insert between hexadecimal representations of bytes, and
 % HexString is the resulting hexadecimal string. For example, bytes_to_hex([255,
 % 0, 128], ' ', HexString) will unify HexString with "ff 00 80".
