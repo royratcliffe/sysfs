@@ -33,6 +33,18 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           ]).
 :- autoload(library(dcg/basics), [remainder/3]).
 
+/** <module> Big- and Little-Endian Grammars
+ *
+ * This module provides DCG grammars for reading and writing big- and
+ * little-endian integer values of arbitrary bit width (multiples of eight). The grammars
+ * can be used to parse or generate binary data in a platform-independent
+ * manner.
+ *
+ * @author Roy Ratcliffe
+ * @version 1.0
+ * @license MIT
+ */
+
 %!  endian(?BigOrLittle, ?Width, ?Value)// is semidet.
 %
 %   Applies `big` or `little`-endian  ordering   grammar  to  an integer
