@@ -71,8 +71,7 @@ directory_entry(Directory, Entry) -->
     % Unify with the next nested directory entry first. This allows a
     % deterministic directory entry to be found without backtracking.
     [Entry_],
-    {
-      directory_entry(Directory, Entry_),
+    { directory_entry(Directory, Entry_),
       entries_entry([Directory, Entry_], Directory_)
     },
     directory_entry(Directory_, Entry).
