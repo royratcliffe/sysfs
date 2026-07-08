@@ -53,6 +53,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * ?- phrase(directory_entry('/path/to/directory', Entry), Entries).
  * ```
  *
+ * @author Roy Ratcliffe
+ * @version 1.0
+ * @license MIT
  */
 
 %!  directory_entry(+Directory, ?Entry)// is nondet.
