@@ -78,11 +78,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * @author Roy Ratcliffe
  */
 
-%! sysfs_gpio_export_entry(-Entry) is nondet.
-% Finds the export entry in the gpio class of sysfs. This is used to determine
-% if the export entry exists, which is necessary for exporting GPIO lines.
-sysfs_gpio_export_entry(Entry) :- sysfs_entry(gpio, Entry, [export]).
-
 %!  sysfs_gpio_export(?Chip, ?Offset, -Export, -Line) is nondet.
 %
 %   Exports a GPIO line by writing its export number to the export pseudo-file
