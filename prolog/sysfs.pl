@@ -69,8 +69,11 @@ sysfs_entry(Class, Entry, Entries) :-
 %   The predicate will sleep for the specified delay time and retry
 %   until the time limit is reached.
 %
-%   @arg File is the name of the file to check, such as value,
-%   direction, etc.
+%   This predicate amounts to absolute_file_name/3 with a time limit and delay time. It is useful
+%   for checking if a file in the sysfs virtual file system is exported and accessible,
+%   without blocking indefinitely.
+%
+%   @arg File is the name of the file to check.
 %
 %   @arg Abs is the absolute path of the file if it exists and is
 %   accessible.
