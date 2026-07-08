@@ -243,6 +243,7 @@ sysfs_gpio_ensure_unexported(Chip, Offset, Export, Line) :-
 
 %!  sysfs_gpio_read(?File, ?Chip, ?Offset, -Data) is nondet.
 %!  sysfs_gpio_read(?File, ?Line, -Data) is nondet.
+%!  sysfs_gpio_read(?Line, +Term) is nondet.
 %
 %   Reads a value from a file in the GPIO line directory in sysfs. The
 %   File is the name of the file to read, such as value, direction, etc.
@@ -287,6 +288,7 @@ sysfs_gpio_read(Line, Term) :-
 
 %!  sysfs_gpio_write(?File, ?Chip, ?Offset, +Data) is nondet.
 %!  sysfs_gpio_write(?File, ?Line, +Data) is nondet.
+%!  sysfs_gpio_write(?Line, ++Term) is nondet.
 %
 %   Writes a value to a file in the GPIO line directory in sysfs. The
 %   File is the name of the file to write, such as value, direction,
