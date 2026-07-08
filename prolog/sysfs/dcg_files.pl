@@ -27,8 +27,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 :- module(sysfs_dcg_files,
-          [ directory_entry//2,                  % +Directory, ?Entry
-            directory_entry/2                    % +Directory, ?Entry
+          [ directory_entry//2 % +Directory, ?Entry
+          , directory_entry/2  % +Directory, ?Entry
           ]).
 :- autoload(library(lists), [member/2]).
 
