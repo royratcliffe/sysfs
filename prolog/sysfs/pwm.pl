@@ -117,9 +117,9 @@ sysfs_pwm_exported(Chip, Export, Chan) :-
 %   Ensures that a PWM channel is exported by the specified Chip.
 %   If already exported, succeeds. Otherwise, exports the channel.
 %
-%   @arg Chip PWM class device name (directory in /sys/class/pwm with `npwm`)
-%   @arg Export integer identifying the PWM channel
-%   @arg Chan atom of the form pwmN where N is the channel number
+%   @arg Chip PWM class device name (directory in /sys/class/pwm with `npwm`).
+%   @arg Export integer identifying the PWM channel.
+%   @arg Chan atom of the form pwmN where N is the channel number.
 
 sysfs_pwm_ensure_exported(Chip, Export, Chan) :-
     sysfs_pwm_chan(Chip, Export, Chan),
@@ -133,11 +133,11 @@ sysfs_pwm_ensure_exported(Chip, Export, Chan) :-
 %   Ensures that a PWM channel is unexported by the specified Chip.
 %   If already unexported, succeeds. Otherwise, unexports the channel.
 %
-%   @arg Chip PWM class device name (directory in /sys/class/pwm with `npwm`)
+%   @arg Chip PWM class device name (directory in /sys/class/pwm with `npwm`).
 %
-%   @arg Export integer identifying the PWM channel
+%   @arg Export integer identifying the PWM channel.
 %
-%   @arg Chan atom of the form pwmN where N is the channel number
+%   @arg Chan atom of the form pwmN where N is the channel number.
 
 sysfs_pwm_ensure_unexported(Chip, Export, Chan) :-
     sysfs_pwm_chan(Chip, Export, Chan),
