@@ -36,8 +36,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 % writing files. The default is ASCII, but it can be changed to UTF-8 if needed.
 % This setting is used by the read_file_as/2 and write_file_as/3 predicates to
 % determine how to interpret the contents of the file being read or written.
-:- setting(line_encoding, oneof([ascii, utf8]), ascii,
-           'Line encoding for reading and writing files.').
+:- setting(line_encoding, oneof([ascii, utf8]), ascii, 'Line encoding for reading and writing files.').
 
 %!  sysfs_entry(+Class, -Entry, ?Entries:list) is nondet.
 %
