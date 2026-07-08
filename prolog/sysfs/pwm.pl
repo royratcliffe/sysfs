@@ -47,6 +47,98 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 :- use_module(library(sysfs/read_file)).
 :- use_module(library(sysfs/write_file)).
 
+/** <module> Linux sysfs PWM Access
+ *
+ * This module provides predicates to access PWM class devices in the Linux
+ * sysfs virtual file system. PWM class devices are represented as directories
+ * in the /sys/class/pwm directory, and contain files that provide information
+ * about the device and its capabilities. The predicates in this module allow
+ * you to export and unexport PWM channels, read and write values to files in
+ * the directories of PWM channels, and find the paths to PWM class devices.
+ *
+ * The main predicates in this module are:
+ *
+ * - sysfs_pwm_export/3 exports a PWM channel by writing its number to the
+ *   export file of the Chip.
+ * - sysfs_pwm_unexport/3 unexports a PWM channel by writing its number to the
+ *   unexport file of the Chip.
+ * - sysfs_pwm_exported/3 finds an Export that is a PWM channel exported by the
+ *   specified Chip, and returns the corresponding Chan.
+ * - sysfs_pwm_ensure_exported/3 ensures that a PWM channel is exported by the
+ *   specified Chip.
+ * - sysfs_pwm_ensure_unexported/3 ensures that a PWM channel is unexported by
+ *   the specified Chip.
+ * - sysfs_pwm_read/3 reads a value from a file in the directory of a PWM
+ *   channel, given a term that specifies the device and file, and the type of
+ *   value to read.
+ * - sysfs_pwm_read/4 reads a value from a file in the directory of a PWM
+ *   channel, given the file name, device name, and returns the value read from
+ *   the file.
+ * - sysfs_pwm_write/3 writes a value to a file in the directory of a PWM
+ *   channel, given a term that specifies the device and file, and the value to
+ *   write.
+ * - sysfs_pwm_write/4 writes a value to a file in the directory of a PWM
+ *   channel, given the file name, device name, and value to write.
+ *
+ * The predicates in this module are designed to be flexible and can be used in
+ * various ways to access PWM class devices and their files in the sysfs virtual
+ * file system.
+ *
+ * ---+++ Example Usage
+ *
+ * To export a PWM channel:
+ *
+ * ?- sysfs_pwm_export(pwmchip0, 0, Chan).
+ *
+ * To unexport a PWM channel:
+ *
+ * ?- sysfs_pwm_unexport(pwmchip0, 0, Chan).
+ *
+ * To read the period of a PWM channel:
+ *
+ * ?- sysfs_pwm_read(pwmchip0, 0, period(NS, ns)).
+ *
+ * To write the duty cycle of a PWM channel:
+ *
+ * ?- sysfs_pwm_write(pwmchip0, 0, duty_cycle(50, percent)).
+ *
+ * To find the path to a specific PWM class device:
+ *
+ * ?- sysfs_pwmchip_path(pwmchip0, Path).
+ *
+ * To find all PWM class devices and their paths:
+ *
+ * ?- sysfs_pwmchip_path(Chip, Path).
+ *
+ * ---+++ Two Arity
+ *
+ * The predicates sysfs_pwm/3, sysfs_pwm/1, sysfs_pwm_read/2, and sysfs_pwm_write/2 provide a more convenient interface for accessing PWM channels by using a compound term to represent the device and channel. For example:
+ *
+ * ?- sysfs_pwm(pwmchip0, 0, PWM), sysfs_pwm_read(PWM, period(NS, ns)).
+ *
+ * The PWM is a
+ * compound term of the form Chip(Chan), where  Chan is the name of the
+ * file in the sysfs  virtual  file   system  that  corresponds  to the
+ * exported PWM channel, which is of  the   form  pwmN,  where N is the
+ * number of the PWM channel. The Term's   arguments  are the values to
+ * write to the  corresponding  files  in   the  directory  of  the PWM
+ * channel. The first argument is the value   to write to the file; the
+ * second argument, if present, specifies the  unit of the value (e.g.,
+ * ns, s, hz, percent, fract). The   predicate  is nondeterministic and
+ * can be backtracked to write the  values   to  multiple  files in the
+ * directory of a PWM channel, or to write  the values to the same file
+ * in multiple PWM channels. The   predicate automatically ensures that
+ * the specified PWM channel is exported   before writing to the files.
+ * If the channel is not already exported,  it will be exported by this
+ * predicate. This allows the caller to write to files in a PWM channel
+ * without having to manually export  the   channel  first, and ensures
+ * that the channel is exported when needed.
+ *
+ * @author Roy Ratcliffe
+ * @version 1.0
+ * @license MIT
+ */
+
 %!  sysfs_pwm_export(+Chip, ?Export, -Chan) is nondet.
 %
 %   Exports a PWM channel by writing its number to the export file of the Chip.
