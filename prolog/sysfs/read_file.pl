@@ -120,9 +120,9 @@ as(term, File, Data) :-
 as(bytes, File, Data) :-
     absolute_file_name(File, Abs, [file_errors(fail), access(read)]),
     read_file_to_codes(Abs, Data, [file_errors(fail), type(binary)]),
-    (   debugging(read(file))
+    (   debugging(sysfs(read_file))
     ->  bytes_to_hex(Data, ' ', HexString),
-        debug(read(file), 'Read bytes from file: ~w~n~s', [File, HexString])
+        debug(sysfs(read_file), 'Read bytes from file: ~w~n~s', [File, HexString])
     ;   true
     ).
 as(number, File, Data) :-
@@ -135,7 +135,7 @@ as(lines, File, Data) :-
     absolute_file_name(File, Abs, [file_errors(fail), access(read)]),
     setting(sysfs:line_encoding, Encoding),
     read_file_to_string(Abs, String, [file_errors(fail), encoding(Encoding)]),
-    debug(read(file), 'Read string from file: ~w~n~s---', [File, String]),
+    debug(sysfs(read_file), 'Read string from file: ~w~n~s---', [File, String]),
     string_lines(String, Data).
 as(line, File, Data) :-
     as(lines, File, [Data]).

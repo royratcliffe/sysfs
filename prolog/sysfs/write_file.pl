@@ -105,9 +105,9 @@ as(term, File, Data) :-
 as(bytes, File, Data) :-
     absolute_file_name(File, Abs, [file_errors(fail), access(write)]),
     write_bytes_to_file(Abs, Data, [file_errors(fail), type(binary)]),
-    (   debugging(write(file))
+    (   debugging(sysfs(write_file))
     ->  bytes_to_hex(Data, ' ', HexString),
-        debug(write(file), 'Wrote bytes to file: ~w~n~s---', [File, HexString])
+        debug(sysfs(write_file), 'Wrote bytes to file: ~w~n~s---', [File, HexString])
     ;   true
     ).
 as(number, File, Data) :-
@@ -121,7 +121,7 @@ as(lines, File, Data) :-
     absolute_file_name(File, Abs, [file_errors(fail), access(write)]),
     setting(sysfs:line_encoding, Encoding),
     write_string_to_file(Abs, String, [file_errors(fail), encoding(Encoding)]),
-    debug(write(file), 'Wrote string to file: ~w~n~s---', [File, String]).
+    debug(sysfs(write_file), 'Wrote string to file: ~w~n~s---', [File, String]).
 as(line, File, Data) :-
     as(lines, File, [Data]).
 as(bigs(Width), File, Data) :-
