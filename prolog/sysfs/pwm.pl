@@ -27,14 +27,20 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 :- module(sysfs_pwm,
-          [ sysfs_pwm_export/3, % +Chip, ?Export, -Chan
-            sysfs_pwm_unexport/3, % +Chip, ?Export, -Chan
-            sysfs_pwm_exported/3, % ?Chip, ?Export, -Chan
-            sysfs_pwm_ensure_exported/3, % ?Chip, ?Export, -Chan
-            sysfs_pwm_ensure_unexported/3, % ?Chip, ?Export, -Chan
-            sysfs_pwm_read/4, % +File, +Chip, ?Export, -Data
-            sysfs_pwm_write/4, % +File, +Chip, ?Export, +Data
-            sysfs_pwm_chan/3 % ?Chip, ?Export, -Chan
+          [ sysfs_pwm_export/3 % +Chip, ?Export, -Chan
+          , sysfs_pwm_unexport/3 % +Chip, ?Export, -Chan
+          , sysfs_pwm_exported/3 % ?Chip, ?Export, -Chan
+          , sysfs_pwm_ensure_exported/3 % ?Chip, ?Export, -Chan
+          , sysfs_pwm_ensure_unexported/3 % ?Chip, ?Export, -Chan
+          , sysfs_pwm_read/4 % +File, +Chip, ?Export, -Data
+          , sysfs_pwm_write/4 % +File, +Chip, ?Export, +Data
+          , sysfs_pwm_chan/3 % ?Chip, ?Export, -Chan
+          , sysfs_pwm_read/3 % ?Chip, ?Export, +Term
+          , sysfs_pwm_write/3 % ?Chip, ?Export, ++Term
+          , sysfs_pwm/3 % ?Chip, ?Export, ?PWM
+          , sysfs_pwm/1 % ?PWM
+          , sysfs_pwm_read/2 % ?PWM, +Term
+          , sysfs_pwm_write/2 % ?PWM, ++Term
           ]).
 :- use_module(library(sysfs)).
 :- use_module(library(sysfs/pwmchip)).
