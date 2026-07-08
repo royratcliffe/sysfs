@@ -57,7 +57,17 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 sysfs_entry(Class, Entry, Entries) :-
     absolute_file_name(sysfs_class(Class), Directory),
-    phrase(directory_entry(Directory, Entry), Entries).
+    (   ground(Entries)
+    ->  phrase(directory_entry(Directory, Entry), Entries),
+        % Cut to prevent backtracking after finding a matching entry, since only
+        % one possible path exists for a given Entry in a given Class. This is
+        % because the sysfs virtual file system, like other file systems, has a
+        % unique path for each file or directory. Therefore, once a matching
+        % entry is found, there is no need to continue searching for other
+        % entries in the same class, as they will not match the specified Entry.
+        !
+    ;   phrase(directory_entry(Directory, Entry), Entries)
+    ).
 
 :- setting(sysfs_exported_time_limit, number, 1, 'Time limit for sysfs exported calls in seconds').
 :- setting(sysfs_exported_delay_time, number, 0.01, 'Delay time between sysfs exported call retries in seconds').
