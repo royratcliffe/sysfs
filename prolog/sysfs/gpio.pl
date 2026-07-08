@@ -278,9 +278,12 @@ sysfs_gpio_read(File, Chip, Offset, Data) :-
     read_file_as(As, Abs, Data).
 
 sysfs_gpio_read(File, Line, Data) :-
-    file_as(File, As),
-    sysfs_gpio_exported(_, _, _, Line),
-    read_file_as(As, sysfs_class_gpio(Line/File), Data).
+    sysfs_gpio_line(Chip, Offset, Line),
+    sysfs_gpio_read(File, Chip, Offset, Data).
+
+sysfs_gpio_read(Line, Term) :-
+    Term =.. [File, Data],
+    sysfs_gpio_read(File, Line, Data).
 
 %!  sysfs_gpio_write(?File, ?Chip, ?Offset, +Data) is nondet.
 %!  sysfs_gpio_write(?File, ?Line, +Data) is nondet.
@@ -319,9 +322,12 @@ sysfs_gpio_write(File, Chip, Offset, Data) :-
     write_file_as(As, Abs, Data).
 
 sysfs_gpio_write(File, Line, Data) :-
-    file_as(File, As),
-    sysfs_gpio_exported(_, _, _, Line),
-    write_file_as(As, sysfs_class_gpio(Line/File), Data).
+    sysfs_gpio_line(Chip, Offset, Line),
+    sysfs_gpio_write(File, Chip, Offset, Data).
+
+sysfs_gpio_write(Line, Term) :-
+    Term =.. [File, Data],
+    sysfs_gpio_write(File, Line, Data).
 
 file_as(value, number).
 file_as(active_low, number).
