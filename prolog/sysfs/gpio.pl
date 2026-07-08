@@ -334,7 +334,8 @@ file_as(active_low, number).
 file_as(direction, atom).
 file_as(edge, atom).
 
-%!  sysfs_gpio_line(?Chip, ?Offset, -Export, -Line) is nondet.
+%!  sysfs_gpio_line(?Chip, ?Offset, ?Export, ?Line) is nondet.
+%!  sysfs_gpio_line(?Chip, ?Offset, ?Line) is nondet.
 %
 %   Finds the Export number and Line name for a given Chip and Offset. The
 %   Export number is calculated by adding the Offset to the Base number of the
@@ -377,6 +378,9 @@ sysfs_gpio_line(Chip, Offset, Export, Line) :-
     between(0, N0, Offset),
     plus(Base, Offset, Export),
     format(atom(Line), 'gpio~d', [Export]).
+
+sysfs_gpio_line(Chip, Offset, Line) :-
+    sysfs_gpio_line(Chip, Offset, _, Line).
 
 :- multifile user:file_search_path/2.
 
