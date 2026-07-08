@@ -53,7 +53,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * ways to access GPIO line information and control GPIO lines in the
  * sysfs virtual file system.
  *
- * ## Chips and Lines
+ * ---+++ Chips and Lines
  *
  * In sysfs, GPIO lines are organised into chips, which are represented
  * as directories in the gpio class of sysfs. Each chip has a base

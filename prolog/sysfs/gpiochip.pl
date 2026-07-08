@@ -43,7 +43,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * flexible and can be used in various ways to access GPIO chip
  * information.
  *
- * ## Usage
+ * ---+++ Usage
  *
  * Suppose you want to read the labels of _all_ the GPIO chips in sysfs.
  * You can use the predicate sysfs_gpiochip_read/3 to do so. The second
