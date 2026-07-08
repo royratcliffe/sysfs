@@ -32,6 +32,29 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           ]).
 :- autoload(library(lists), [member/2]).
 
+/** <module> Neat Filesystem Traversal by DCG
+ *
+ * This module provides a neat way to traverse a filesystem using a
+ * Definite Clause Grammar (DCG). It defines predicates to find files
+ * and directories in a given directory, while skipping special entries
+ * like '.' and '..'. The main predicates are:
+ *
+ * - directory_entry//2: A DCG rule that finds files and directories in
+ *   the specified directory, yielding each entry as it is found.
+ * - directory_entry/2: A predicate that finds files and directories in
+ *   the specified directory, yielding each entry as it is found.
+ *
+ * The predicates are designed to be flexible and can be used in various
+ * ways to access files and directories in the filesystem.
+ *
+ * ---+++ Usage
+ *
+ * ```
+ * ?- phrase(directory_entry('/path/to/directory', Entry), Entries).
+ * ```
+ *
+ */
+
 %!  directory_entry(+Directory, ?Entry)// is nondet.
 %
 %   Neatly traverses a file system using a grammar.
