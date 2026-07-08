@@ -29,9 +29,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 :- module(sysfs_phandles,
           [ sysfs_gpiochip_offset_of_pwmchip/3 % ?GPIOChip, ?GPIOOffset, ?PWMChip
           ]).
-:- use_module(gpiochip).
-:- use_module(pwmchip).
-:- use_module(read_file).
+:- use_module(library(sysfs/gpiochip)).
+:- use_module(library(sysfs/pwmchip)).
+:- use_module(library(sysfs/read_file)).
 
 % Tableise the phandle lookup for GPIO chips and PWM chips. This allows us to
 % efficiently find the GPIO chip and offset that correspond to a given PWM chip,

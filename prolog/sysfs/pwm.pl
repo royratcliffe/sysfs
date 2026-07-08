@@ -37,9 +37,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             sysfs_pwm_chan/3 % ?Chip, ?Export, -Chan
           ]).
 :- use_module(library(sysfs)).
-:- use_module(pwmchip).
-:- use_module(read_file).
-:- use_module(write_file).
+:- use_module(library(sysfs/pwmchip)).
+:- use_module(library(sysfs/read_file)).
+:- use_module(library(sysfs/write_file)).
 
 %!  sysfs_pwm_export(+Chip, ?Export, -Chan) is nondet.
 %

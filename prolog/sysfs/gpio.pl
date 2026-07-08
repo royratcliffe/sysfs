@@ -38,10 +38,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             sysfs_gpio_write/4, % ?File, ?Chip, ?Offset, +Data
             sysfs_gpio_line/4 % ?Chip, ?Offset, -Export, -Line
           ]).
-:- use_module(sysfs).
-:- use_module(gpiochip).
-:- use_module(read_file).
-:- use_module(write_file).
+:- use_module(library(sysfs)).
+:- use_module(library(sysfs/gpiochip)).
+:- use_module(library(sysfs/read_file)).
+:- use_module(library(sysfs/write_file)).
 
 /** <module> Linux GPIO Access in sysfs
  *
