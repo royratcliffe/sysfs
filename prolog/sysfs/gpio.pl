@@ -384,6 +384,8 @@ sysfs_gpio_line(Chip, Offset, Export, Line) :-
     plus(Base, Offset, Export),
     format(atom(Line), 'gpio~d', [Export]).
 
+:- table sysfs_gpio_line/3.
+
 sysfs_gpio_line(Chip, Offset, Line) :-
     sysfs_gpio_line(Chip, Offset, _, Line).
 
