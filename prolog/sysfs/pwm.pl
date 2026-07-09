@@ -39,6 +39,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           , sysfs_pwm_write/3 % ?Chip, ?Export, ++Term
           , sysfs_pwm/3 % ?Chip, ?Export, ?PWM
           , sysfs_pwm/1 % ?PWM
+          , sysfs_pwm_ensure_exported/1 % ?PWM
           , sysfs_pwm_read/2 % ?PWM, +Term
           , sysfs_pwm_write/2 % ?PWM, ++Term
           ]).
@@ -563,6 +564,22 @@ sysfs_pwm(Chip, Export, PWM) :-
     PWM =.. [Chip, Chan].
 
 sysfs_pwm(PWM) :- sysfs_pwm(_, _, PWM).
+
+%!  sysfs_pwm_ensure_exported(?PWM) is nondet.
+%
+%   Ensures that a PWM channel is exported by the implied chip.
+%   If already exported, succeeds. Otherwise, exports the channel.
+%
+%   @arg PWM is a compound term of the form Chip(Chan), where Chan is
+%   the name of the file in the sysfs virtual file system that corresponds
+%   to the exported PWM channel, which is of the form pwmN, where N is
+%   the number of the PWM channel.
+
+sysfs_pwm_ensure_exported(PWM) :-
+    % First derive the Chip and Export from the PWM term, then ensure that the channel is exported.
+    % Throw away the Chan since it is not needed for the ensure-export operation.
+    sysfs_pwm(Chip, Export, PWM),
+    sysfs_pwm_ensure_exported(Chip, Export, _).
 
 %!  sysfs_pwm_read(?PWM, +Term) is nondet.
 %
