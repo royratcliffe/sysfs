@@ -392,6 +392,8 @@ user:file_search_path(sysfs_class_pwm, sysfs_class(pwm)).
 %   files from a PWM  channel  without   having  to  manually export the
 %   channel first, and ensures that the channel is exported when needed.
 %
+%   Note: period and duty cycle reads require a units argument, such as ns, s, hz, percent, or fract. The units argument is used to convert the raw nanosecond value read from the file into the desired units. If the units argument is not provided, the predicate will fail.
+%
 %   @arg Chip is the name of the PWM class device, such as pwmchip0,
 %   pwmchip1, etc.
 %
@@ -454,6 +456,9 @@ read_pwm(duty_cycle(Percent, percent), Chip, Export) :-
 %   predicate. This allows the caller to write to files in a PWM channel
 %   without having to manually export  the   channel  first, and ensures
 %   that the channel is exported when needed.
+%
+%   Note that writing the period or duty cycle requires a unit specified in the second argument of the term.
+%   It does not default to nanoseconds; the unit must be explicitly provided (e.g., ns, s, hz, percent, fract).
 %
 %   @arg Chip is the name of the PWM class device, such as pwmchip0,
 %   pwmchip1, etc.
