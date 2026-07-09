@@ -559,6 +559,14 @@ hz(NS, Hz) => NS > 0, Hz is 1_000_000_000 / NS.
 %   number of the PWM channel. The term uniquely identifies a PWM channel
 %   in sysfs by combining the chip and channel numbers.
 
+% Assume that PWM chip and channel exports remain deterministic during the
+% lifetime of the Prolog process. This assumption allows us to cache the results
+% of sysfs_pwm/3 and sysfs_pwm/1 for efficiency, as the exported channels are
+% unlikely to change frequently. If the exports do change, the cached results
+% may become stale, but this is acceptable for most use cases where PWM channels
+% are configured at startup and remain stable during operation.
+:- table sysfs_pwm/3.
+
 sysfs_pwm(Chip, Export, PWM) :-
     sysfs_pwm_chan(Chip, Export, Chan),
     PWM =.. [Chip, Chan].
