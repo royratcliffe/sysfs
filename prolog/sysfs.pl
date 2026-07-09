@@ -32,6 +32,14 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           ]).
 :- use_module(library(sysfs/dcg_files)).
 
+/** <module> Sysfs Virtual File System
+ *
+ * This module provides predicates to access the sysfs virtual file system
+ * in Linux. It allows developers to find the path to sysfs class directories
+ * and files in those directories. The predicates are designed
+ * to be flexible and can be used in various ways to access sysfs information.
+ */
+
 % The line encoding setting specifies the encoding to use when reading and
 % writing files. The default is ASCII, but it can be changed to UTF-8 if needed.
 % This setting is used by the read_file_as/2 and write_file_as/3 predicates to
