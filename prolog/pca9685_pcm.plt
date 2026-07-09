@@ -14,8 +14,8 @@ enable(PWM, Enable) =>
 ensure_export(PWM) :-
     pwmchip(Chip),
     between(11, 15, Export),
-    sysfs_pwm_ensure_exported(Chip, Export, Chan),
-    sysfs_pwm(Chip, Export, PWM).
+    sysfs_pwm(Chip, Export, PWM),
+    sysfs_pwm_ensure_exported(PWM).
 
 read_pwm(PWM, Term) :- pwm(PWM), sysfs_pwm_read(PWM, Term).
 
@@ -30,8 +30,8 @@ percent(Percent) :-
 
 test(period, NS == 5079040) :-
     pwmchip(Chip),
-    sysfs_pwm_ensure_exported(Chip, 11, _),
     sysfs_pwm(Chip, 11, PWM11),
+    sysfs_pwm_ensure_exported(PWM11),
     sysfs_pwm_read(PWM11, period(NS, ns)).
 
 duty_cycle :-
