@@ -3,7 +3,7 @@
     Created: Dec  9 2024
     Purpose: Sysfs Virtual File System
 
-Copyright (c) 2025, Roy Ratcliffe, Northumberland, United Kingdom
+Copyright (c) 2026, Roy Ratcliffe, Northumberland, United Kingdom
 
 Permission is hereby granted, free of charge,  to any person obtaining a
 copy  of  this  software  and    associated   documentation  files  (the
