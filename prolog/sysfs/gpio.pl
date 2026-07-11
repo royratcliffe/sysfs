@@ -27,18 +27,18 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 :- module(sysfs_gpio,
-          [ sysfs_gpio_export/4, % ?Chip, ?Offset, -Export, -Line
-            sysfs_gpio_unexport/4, % ?Chip, ?Offset, -Export, -Line
-            sysfs_gpio_exported/4, % ?Chip, ?Offset, -Export, -Line
-            sysfs_gpio_ensure_exported/4, % ?Chip, ?Offset, -Export, -Line
-            sysfs_gpio_ensure_unexported/4, % ?Chip, ?Offset, -Export, -Line
-            sysfs_gpio_read/4, % ?File, ?Chip, ?Offset, -Data
-            sysfs_gpio_read/3, % ?File, ?Line, -Data
-            sysfs_gpio_read/2, % ?Line, +Term
-            sysfs_gpio_write/4, % ?File, ?Chip, ?Offset, +Data
-            sysfs_gpio_write/3, % ?File, ?Line, +Data
-            sysfs_gpio_write/2, % ?Line, ++Term
-            sysfs_gpio_line/4 % ?Chip, ?Offset, ?Export, ?Line
+          [ sysfs_gpio_export/4 % ?Chip, ?Offset, -Export, -Line
+          , sysfs_gpio_unexport/4 % ?Chip, ?Offset, -Export, -Line
+          , sysfs_gpio_exported/4 % ?Chip, ?Offset, -Export, -Line
+          , sysfs_gpio_ensure_exported/4 % ?Chip, ?Offset, -Export, -Line
+          , sysfs_gpio_ensure_unexported/4 % ?Chip, ?Offset, -Export, -Line
+          , sysfs_gpio_read/4 % ?File, ?Chip, ?Offset, -Data
+          , sysfs_gpio_read/3 % ?File, ?Line, -Data
+          , sysfs_gpio_read/2 % ?Line, +Term
+          , sysfs_gpio_write/4 % ?File, ?Chip, ?Offset, +Data
+          , sysfs_gpio_write/3 % ?File, ?Line, +Data
+          , sysfs_gpio_write/2 % ?Line, ++Term
+          , sysfs_gpio_line/4 % ?Chip, ?Offset, ?Export, ?Line
           , sysfs_gpio_line/3 % ?Chip, ?Offset, ?Line
           ]).
 :- use_module(library(sysfs)).

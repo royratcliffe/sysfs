@@ -27,8 +27,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 :- module(sysfs_read_file,
-          [ read_file_as/2, % +File, +Term
-            read_file_as/3  % +As, +File, -Data
+          [ read_file_as/2 % +File, +Term
+          , read_file_as/3 % +As, +File, -Data
           ]).
 :- autoload(library(readutil), [read_file_to_string/3, read_file_to_codes/3]).
 :- autoload(library(strings), [string_lines/2]).

@@ -27,9 +27,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 :- module(sysfs_endian,
-          [ endian//3,
-            big_endian//2,
-            little_endian//2
+          [ endian//3 % ?BigOrLittle, ?Width, ?Value
+          , big_endian//2 % ?Width, ?Value
+          , little_endian//2 % ?Width, ?Value
           ]).
 :- autoload(library(dcg/basics), [remainder/3]).
 
