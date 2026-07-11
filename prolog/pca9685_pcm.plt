@@ -11,11 +11,14 @@ enable(PWM, Enable), var(Enable) =>
 enable(PWM, Enable) =>
     pwm(PWM), sysfs_pwm_write(PWM, enable(Enable)).
 
-ensure_export(PWM) :-
-    pwmchip(Chip),
-    between(11, 15, Export),
-    sysfs_pwm(Chip, Export, PWM),
+ensure_export(Export, PWM) :-
+    pwmchip(PWMChip),
+    sysfs_pwm(PWMChip, Export, PWM),
     sysfs_pwm_ensure_exported(PWM).
+
+ensure_export(PWM) :-
+    between(11, 15, Export),
+    ensure_export(Export, PWM).
 
 read_pwm(PWM, Term) :- pwm(PWM), sysfs_pwm_read(PWM, Term).
 
@@ -29,15 +32,12 @@ percent(Percent) :-
            )).
 
 test(period, NS == 5079040) :-
-    pwmchip(Chip),
-    sysfs_pwm(Chip, 11, PWM11),
-    sysfs_pwm_ensure_exported(PWM11),
+    ensure_export(11, PWM11),
     sysfs_pwm_read(PWM11, period(NS, ns)).
 
 duty_cycle :-
-    pwmchip(Chip),
-    between(11, 15, Export), sysfs_pwm_ensure_exported(Chip, Export, _),
-    sysfs_pwm(Chip, Export, PWM),
+    between(11, 15, Export),
+    ensure_export(Export, PWM),
     sysfs_pwm_write(PWM, enable(0)).
 
 dance :-
