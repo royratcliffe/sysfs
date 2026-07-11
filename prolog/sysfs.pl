@@ -30,6 +30,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           [ sysfs_entry/3 % +Class, -Entry, ?Entries:list
           , sysfs_exported_with_time_limit/3 % +File, -Abs, +Options:list
           ]).
+:- use_module(library(settings)).
+:- use_module(library(time)).
 :- use_module(library(sysfs/dcg_files)).
 
 /** <module> Sysfs Virtual File System
