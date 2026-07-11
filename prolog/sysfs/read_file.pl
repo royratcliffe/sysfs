@@ -37,6 +37,18 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 :- use_module(endian).
 :- use_module(hex).
 
+/** <module> Reading Files in sysfs or Elsewhere
+ *
+ * This module provides predicates to read files in the sysfs virtual file
+ * system or elsewhere. It allows developers to read data from files in a
+ * variety of formats, including Prolog terms, bytes, numbers, atoms, lines,
+ * and big-endian or little-endian integers.
+ *
+ * @author Roy Ratcliffe
+ * @version 1.0
+ * @license MIT
+ */
+
 %!  read_file_as(+File, +Term) is semidet.
 %!  read_file_as(+As, +File, -Data) is semidet.
 %
