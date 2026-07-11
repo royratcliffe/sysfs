@@ -30,10 +30,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           [ sysfs_gpiochip_offset_of_pwmchip/3 % ?GPIOChip, ?GPIOOffset, ?PWMChip
           ]).
 :- use_module(library(sysfs/gpiochip)).
-:- use_module(library(sysfs/gpio), []). % for sysfs_class_gpio file search path
 :- use_module(library(sysfs/pwmchip)).
-:- use_module(library(sysfs/pwm), []). % for sysfs_class_pwm file search path
 :- use_module(library(sysfs/read_file)).
+:- use_module(library(sysfs/gpio), []). % for sysfs_class_gpio file search path
+:- use_module(library(sysfs/pwm), []). % for sysfs_class_pwm file search path
 
 /** <module> Linux sysfs phandles for GPIO and PWM chips
  *
