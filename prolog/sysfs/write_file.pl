@@ -27,13 +27,25 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 :- module(sysfs_write_file,
-          [ write_file_as/2, % +File, +Term
-            write_file_as/3  % +As, +File, +Data
+          [ write_file_as/2 % +File, +Term
+          , write_file_as/3 % +As, +File, +Data
           ]).
 :- autoload(library(dcg/high_order), [sequence//2]).
 :- use_module(library(sysfs), []).
 :- use_module(endian).
 :- use_module(hex).
+
+/** <module> Writing Files in sysfs or Elsewhere
+ *
+ * This module provides predicates to write files in the sysfs virtual file
+ * system or elsewhere. It allows developers to write data to files in a
+ * variety of formats, including Prolog terms, bytes, numbers, atoms, lines,
+ * and big-endian or little-endian integers.
+ *
+ * @author Roy Ratcliffe
+ * @version 1.0
+ * @license MIT
+ */
 
 %!  write_file_as(+File, +Term) is semidet.
 %!  write_file_as(+As, +File, +Data) is semidet.
@@ -135,21 +147,32 @@ as(littles(Width), File, Data) :-
 as(little(Width), File, Data) :-
     as(littles(Width), File, [Data]).
 
-%! write_bytes_to_file(+File, +Bytes, +Options) is semidet.
-% Writes a list of bytes (codes) to a file. The File is the path to the file,
-% Bytes is a list of codes to write, and Options is a list of options for
-% opening the file. The file is opened in binary mode, and the bytes are
-% written to the file as binary data. The file is closed after writing.
+%!  write_bytes_to_file(+File, +Bytes, +Options) is semidet.
+%
+%   Writes a list of bytes (i.e. codes in   the  range 0-255) to a file.
+%   The file should be opened in binary   mode; the bytes are written to
+%   the file as binary data using put_byte/2.   The file is closed after
+%   writing.
+%
+%   @arg File is the path to the file in the file system.
+%   @arg Bytes is a list of codes to write to the file.
+%   @arg Options is a list of options for opening the file.
+
 write_bytes_to_file(File, Bytes, Options) :-
     setup_call_cleanup(open(File, write, Stream, Options),
                        maplist(put_byte(Stream), Bytes),
                        close(Stream)).
 
-%! write_string_to_file(+File, +String, +Options) is semidet.
-% Writes a single string to a file. The File is the path to the file, String is
-% the string to write, and Options is a list of options for opening the file.
-% The file is opened in text mode, and the string is written to the file as a
-% single line. The file is closed after writing.
+%!  write_string_to_file(+File, +String, +Options) is semidet.
+%
+%   Writes a single string to a file. The  file should be opened in text
+%   mode; the string is written to the file   as a single line without a
+%   newline character. The file is closed after writing.
+%
+%   @arg File is the path to the file in the file system.
+%   @arg String is the string to write to the file.
+%   @arg Options is a list of options for opening the file.
+
 write_string_to_file(File, String, Options) :-
     setup_call_cleanup(open(File, write, Stream, Options),
                        write(Stream, String),
