@@ -52,7 +52,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 %!  read_file_as(+File, +Term) is semidet.
 %!  read_file_as(+As, +File, -Data) is semidet.
 %
-%   Reads a Term from a file at File. RQeads bytes, a number, an atom or
+%   Reads a Term from a file at File.  Reads bytes, a number, an atom or
 %   lines of strings without attempting  to   interpret  the  strings as
 %   Prolog, not unless Term is of the form term(_).
 %
@@ -61,46 +61,51 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 %   remaining arguments are the parameters  for   that  method. The read
 %   methods are defined as follows:
 %
-%       - `term`: reads the file as a Prolog term. The file should contain a single
-%         line that represents a Prolog term. The term is unified with the Data
-%         variable.
+%       - `term`: reads the file  as  a   Prolog  term.  The file should
+%       contain a single line that represents a Prolog term. The term is
+%       unified with the Data variable.
 %
-%       - `bytes`: reads the file as a list of bytes (codes). The file is treated as a
-%         binary file, and the contents are unified with the Data variable as a list
-%         of codes.
+%       - `bytes`: reads the file as a   list of bytes (codes). The file
+%       is treated as a binary file, and   the contents are unified with
+%       the Data variable as a list of codes.
 %
-%       - `number`: reads the file as a number. The file should contain a single line
-%         that represents a number. The number is unified with the Data variable.
+%       - `number`: reads the file as a  number. The file should contain
+%       a single line that represents a   number.  The number is unified
+%       with the Data variable.
 %
-%       - `atom`: reads the file as an atom. The file should contain a single line
-%         that represents an atom. The atom is unified with the Data variable.
+%       - `atom`: reads the file as an   atom. The file should contain a
+%       single line that represents an atom.   The  atom is unified with
+%       the Data variable.
 %
-%       - `lines`: reads the file as a list of lines. The file is treated as a text
-%         file, and the contents are unified with the Data variable as a list of
-%         lines (strings).
+%       - `lines`: reads the file  as  a   list  of  lines.  The file is
+%       treated as a text file, and the   contents  are unified with the
+%       Data variable as a list of lines (strings).
 %
-%       - `line`: reads the file as a single line. The file is treated as a text file,
-%         and the contents are unified with the Data variable as a single line (string).
+%       - `line`: reads the file as a   single line. The file is treated
+%       as a text file, and  the  contents   are  unified  with the Data
+%       variable as a single line (string).
 %
-%       - bigs(Width): reads the file as a sequence of big-endian integers of the
-%         specified Width (in bits). The file is treated as a binary file, and the
-%         contents are interpreted as a sequence of big-endian integers. The list of
-%         integers is unified with the Data variable.
+%       - bigs(Width): reads the  file  as   a  sequence  of  big-endian
+%       integers of the specified Width (in   bits). The file is treated
+%       as a binary file, and the contents are interpreted as a sequence
+%       of big-endian integers. The list of integers is unified with the
+%       Data variable.
 %
-%       - big(Width): reads the file as a big-endian integer of the specified Width
-%         (in bits). The file is treated as a binary file, and the contents are
-%         interpreted as a big-endian integer. The integer is unified with the Data
-%         variable.
+%       - big(Width): reads the file  as   a  big-endian  integer of the
+%       specified Width (in bits). The file is treated as a binary file,
+%       and the contents are interpreted as   a  big-endian integer. The
+%       integer is unified with the Data variable.
 %
-%       - littles(Width): reads the file as a sequence of little-endian integers of the
-%         specified Width (in bits). The file is treated as a binary file, and the
-%         contents are interpreted as a sequence of little-endian integers. The list of
-%         integers is unified with the Data variable.
+%       - littles(Width): reads the file as  a sequence of little-endian
+%       integers of the specified Width (in   bits). The file is treated
+%       as a binary file, and the contents are interpreted as a sequence
+%       of little-endian integers. The list of  integers is unified with
+%       the Data variable.
 %
-%       - little(Width): reads the file as a little-endian integer of the specified
-%         Width (in bits). The file is treated as a binary file, and the contents
-%         are interpreted as a little-endian integer. The integer is unified with
-%         the Data variable.
+%       - little(Width): reads the file as   a  little-endian integer of
+%       the specified Width (in bits). The file   is treated as a binary
+%       file, and the  contents  are   interpreted  as  a  little-endian
+%       integer. The integer is unified with the Data variable.
 %
 %   @arg File is the path to the file in the file system.
 %
