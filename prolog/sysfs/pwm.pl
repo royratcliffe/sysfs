@@ -589,8 +589,9 @@ sysfs_pwm(PWM) :- sysfs_pwm(_, _, PWM).
 %   the number of the PWM channel.
 
 sysfs_pwm_ensure_exported(PWM) :-
-    % First derive the Chip and Export from the PWM term, then ensure that the channel is exported.
-    % Throw away the Chan since it is not needed for the ensure-export operation.
+    % First derive the Chip and Export from the PWM term, then ensure that the
+    % channel is exported. Throw away the Chan since it is not needed for the
+    % ensure-export operation.
     sysfs_pwm(Chip, Export, PWM),
     sysfs_pwm_ensure_exported(Chip, Export, _).
 
