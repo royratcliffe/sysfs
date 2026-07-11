@@ -46,6 +46,9 @@ Or clone and use locally.
 
 ## Quick Start
 
+The following examples assume you have a Raspberry Pi with GPIO and PWM chips available.
+Adjust the chip numbers and line/channel offsets to match your hardware.
+
 ### Load modules
 
 ```prolog
