@@ -629,18 +629,13 @@ sysfs_pwm_read(PWM, Term) :-
 %
 %   Writes a value to a file in the directory of a PWM channel.
 %
-%   The Term is a Prolog term that specifies  the file to write. It is a
-%   compound term with the name of the file as the functor; the compound arguments specify what to write.
+%   @arg PWM is a compound term of the form Chip(Chan) specifying the
+%   PWM chip and channel.
 %
-%   @arg PWM is a compound term of   the  form Chip(Chan), where Chan is
-%   the name of  the  file  in  the   sysfs  virtual  file  system  that
-%   corresponds to the exported PWM channel, which  is of the form pwmN,
-%   where N is the number of the PWM channel.
-%
-%   @arg Term is a Prolog term that   specifies  the file to write, with
-%   the name of the file as the functor   and  the value to write to the
-%   file as the first argument. The   second argument, if any, specifies
-%   the unit of the value (e.g., ns, s, hz, percent, fract).
+%   @arg Term is a fully-grounded Prolog term that specifies the file to
+%   write, with the name of the file  as   the  functor and the value to
+%   write to the file as the  first   argument.  The second argument, if
+%   any, specifies the value's units (e.g., ns, s, hz, percent, fract).
 
 sysfs_pwm_write(PWM, Term) :-
     sysfs_pwm(Chip, Export, PWM),
