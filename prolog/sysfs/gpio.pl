@@ -79,6 +79,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * in various ways to access and control GPIO lines in sysfs.
  *
  * @author Roy Ratcliffe
+ * @version 1.0
+ * @license MIT
  */
 
 %!  sysfs_gpio_export(?Chip, ?Offset, -Export, -Line) is nondet.

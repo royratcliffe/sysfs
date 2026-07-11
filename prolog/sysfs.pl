@@ -40,6 +40,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * designed to be flexible and can  be   used  in various ways to access
  * sysfs information.
  *
+ * @author Roy Ratcliffe
+ * @version 1.0
+ * @license MIT
  */
 
 % The line encoding setting specifies the   encoding to use when reading
