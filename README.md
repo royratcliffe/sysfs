@@ -134,7 +134,7 @@ P = 7.
 
 ## Tests and Examples
 
-    - see `prolog/gpio_l298.plt`
+    - see `prolog/l298.plt`
     - see `prolog/pca9685_pcm.plt`
 
 These include practical usage patterns for motor-control and PWM scenarios.
