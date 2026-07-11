@@ -27,7 +27,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 :- module(sysfs_write_file,
-          [ write_file_as/2 % +File, +Term
+          [ write_file_as/2 % +File, ++Term
           , write_file_as/3 % +As, +File, +Data
           ]).
 :- autoload(library(dcg/high_order), [sequence//2]).
@@ -47,51 +47,68 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * @license MIT
  */
 
-%!  write_file_as(+File, +Term) is semidet.
+%!  write_file_as(+File, ++Term) is semidet.
 %!  write_file_as(+As, +File, +Data) is semidet.
 %
-%   Writes a Term to a file at File. The Term is a Prolog term that specifies how
-%   to write the file. The first argument of the term is the name of the write
-%   method, and the remaining arguments are the parameters for that method. The
-%   write methods are defined as follows:
+%   In the two-arity form, writes a Term to  a file at File. The Term is
+%   a Prolog term that specifies  how  to   write  the  file.  The first
+%   argument of the term is  the  name   of  the  write  method, and the
+%   remaining arguments are the parameters for   that  method. The write
+%   methods are defined as follows:
 %
-%       - term: writes a Prolog term to the file. The Data variable should be a
-%         Prolog term, and it will be converted to a string and written to the file
-%         as a single line.
-%       - bytes: writes a list of bytes (codes) to the file. The Data variable
-%         should be a list of codes, and it will be written to the file as binary
-%         data.
-%       - number: writes a number to the file. The Data variable should be a number,
-%         and it will be converted to a string and written to the file as a single
-%         line.
-%       - atom: writes an atom to the file. The Data variable should be an atom, and
-%         it will be converted to a string and written to the file as a single line.
-%       - lines: writes a list of lines to the file. The Data variable should be a
-%         list of strings, and each string will be written to the file as a separate
-%         line.
-%       - line: writes a single line to the file. The Data variable should be a
-%         string, and it will be written to the file as a single line.
-%       - bigs(Width): writes a sequence of big-endian integers of the
-%         specified Width (in bits) to the file. The Data variable should be
-%         a list of integers, and each integer will be converted to a
-%         sequence of bytes in big-endian format and written to the file as
-%         binary data.
-%       - big(Width): writes a big-endian integer of the specified Width (in bits)
-%         to the file. The Data variable should be an integer, and it will be
-%         converted to a list of bytes in big-endian format and written to the file
-%         as binary data.
-%       - littles(Width): writes a sequence of little-endian integers of the
-%         specified Width (in bits) to the file. The Data variable should be a list
-%         of integers, and each integer will be converted to a sequence of bytes in
-%         little-endian format and written to the file as binary data.
-%       - little(Width): writes a little-endian integer of the specified Width (in
-%         bits) to the file. The Data variable should be an integer, and it will be
-%         converted to a list of bytes in little-endian format and written to the
-%         file as binary data.
+%       - `term`: writes a Prolog term to   the  file. The Data variable
+%       should be a Prolog term, and it   will  be converted to a string
+%       and written to the file as a single line.
+%
+%       - `bytes`: writes a list of bytes  (codes) to the file. The Data
+%       variable should be a list of codes,   and  it will be written to
+%       the file as binary data.
+%
+%       - `number`: writes a  number  to   the  file.  The Data variable
+%       should be a number, and it  will   be  converted to a string and
+%       written to the file as a single line.
+%
+%       - `atom`: writes an atom to the   file. The Data variable should
+%       be an atom, and it will be converted  to a string and written to
+%       the file as a single line.
+%
+%       - `lines`: writes a list of lines to the file. The Data variable
+%       should be a list of strings, and  each string will be written to
+%       the file as a separate line.
+%
+%       - `line`: writes a single line to   the  file. The Data variable
+%       should be a string, and it will  be   written  to  the file as a
+%       single line.
+%
+%       - bigs(Width): writes a sequence of   big-endian integers of the
+%       specified Width (in bits) to the  file. The Data variable should
+%       be a list of integers, and each   integer will be converted to a
+%       sequence of bytes in big-endian format   and written to the file
+%       as binary data.
+%
+%       - big(Width): writes a big-endian integer of the specified Width
+%       (in bits) to the file. The Data   variable should be an integer,
+%       and it will be converted to a list of bytes in big-endian format
+%       and written to the file as binary data.
+%
+%       - littles(Width): writes a sequence of little-endian integers of
+%       the specified Width (in bits)  to   the  file. The Data variable
+%       should be a list of integers, and each integer will be converted
+%       to a sequence of bytes in   little-endian  format and written to
+%       the file as binary data.
+%
+%       - little(Width): writes a little-endian integer of the specified
+%       Width (in bits) to the file.  The   Data  variable  should be an
+%       integer, and it will  be  converted  to   a  list  of  bytes  in
+%       little-endian format and written to the file as binary data.
+%
+%   In the three-arity form, writes Data to a file at File using the
+%   specified write method.
 %
 %   @arg File is the path to the file in the file system.
 %
-%   @arg As is a Prolog term that specifies how to write the file, as described above.
+%   @arg As is a Prolog term that specifies how to write the file, as
+%   described above.
 %
 %   @arg Term is the name of the write method, as described above.
 %
