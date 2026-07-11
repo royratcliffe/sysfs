@@ -35,40 +35,67 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 :- use_module(library(sysfs/pwm), []). % for sysfs_class_pwm file search path
 :- use_module(library(sysfs/read_file)).
 
-% Tableise the phandle lookup for GPIO chips and PWM chips. This allows us to
-% efficiently find the GPIO chip and offset that correspond to a given PWM chip,
-% which is necessary for controlling the PWM output using the GPIO line.
-% Tableising this predicate avoids redundant lookups and improves performance
-% when working with GPIO and PWM chip phandles. This assumes that the phandle
-% relationships between GPIO chips and PWM chips do not change at runtime, which
-% is typically the case in a static hardware configuration.
+/** <module> Linux sysfs phandles for GPIO and PWM chips
+ *
+ * This module provides predicates to access   phandles for GPIO and PWM
+ * chips in the Linux sysfs  virtual   file  system. Phandles are unique
+ * identifiers for devices in the device tree  and are used to establish
+ * relationships between devices. The predicates   in  this module allow
+ * you to find the GPIO chip and offset   that correspond to a given PWM
+ * chip, which is necessary for  controlling   the  PWM output using the
+ * GPIO line. The main predicate in this module is:
+ *
+ * - sysfs_gpiochip_offset_of_pwmchip/3 finds the GPIO   chip and offset
+ * that correspond to a  PWM  chip.  The   GPIO  chip  is  the chip that
+ * provides the GPIO line used for PWM   control,  and the offset is the
+ * specific GPIO line used for PWM  control.   The  PWM chip is the chip
+ * that uses the GPIO line to control   the PWM output. The predicate is
+ * nondeterministic and can be backtracked to   find  all GPIO chips and
+ * offsets that correspond to PWM chips in the system.
+ *
+ * @author Roy Ratcliffe
+ * @version 1.0
+ * @license MIT
+ */
+
+% Tableise the phandle lookup for GPIO chips and PWM chips. This allows
+% us to efficiently find the GPIO chip and offset that correspond to a
+% given PWM chip, which is necessary for controlling the PWM output
+% using the GPIO line. Tableising this predicate avoids redundant
+% lookups and improves performance when working with GPIO and PWM chip
+% phandles. This assumes that the phandle relationships between GPIO
+% chips and PWM chips do not change at runtime, which is typically the
+% case in a static hardware configuration.
 :- table sysfs_gpiochip_offset_of_pwmchip/3.
 
 %!  sysfs_gpiochip_offset_of_pwmchip(?GPIOChip, ?GPIOOffset, ?PWMChip) is nondet.
 %
-%   Finds the GPIO chip and offset that correspond to a PWM chip. The GPIO chip
-%   is the chip that provides the GPIO line used for PWM control, and the offset
-%   is the specific GPIO line used for PWM control. The PWM chip is the chip
-%   that uses the GPIO line to control the PWM output. The predicate is
-%   nondeterministic and can be backtracked to find all GPIO chips and offsets
-%   that correspond to PWM chips in the system.
+%   Finds the GPIO chip and offset that   correspond  to a PWM chip. The
+%   GPIO chip is the chip  that  provides   the  GPIO  line used for PWM
+%   control, and the offset is  the  specific   GPIO  line  used for PWM
+%   control. The PWM chip is the chip that uses the GPIO line to control
+%   the PWM output.  The  predicate  is   nondeterministic  and  can  be
+%   backtracked to find all GPIO chips   and  offsets that correspond to
+%   PWM chips in the system.
 %
-%   The predicate works by first finding all GPIO chips in the system and
-%   reading their phandles. Then, it finds all PWM chips in the system and reads
-%   their `gpios` file to find the GPIO lines they use for PWM control. By
-%   matching the phandle of the GPIO chip with the phandle in the `gpios` file
-%   of the PWM chip, it can determine which GPIO chip and offset correspond to
-%   which PWM chip.
+%   The predicate works by first finding all   GPIO  chips in the system
+%   and reading their phandles. Then, it  finds   all  PWM  chips in the
+%   system and reads their `gpios` file to  find the GPIO lines they use
+%   for PWM control. By matching the phandle   of the GPIO chip with the
+%   phandle in the `gpios` file of the  PWM chip, it can determine which
+%   GPIO chip and offset correspond to which PWM chip.
 %
-%   @arg GPIOChip is the name of a GPIO chip, such as gpiochip0, gpiochip1, etc.
-%   This is the chip that provides the GPIO line used for PWM control.
+%   @arg GPIOChip is the  name  of  a   GPIO  chip,  such  as gpiochip0,
+%   gpiochip1, etc. This is the chip that   provides  the GPIO line used
+%   for PWM control.
 %
-%   @arg GPIOOffset is the offset of the GPIO line used for PWM control. This is
-%   the specific GPIO line that the PWM chip uses to control the enable signal
-%   for the PWM output.
+%   @arg GPIOOffset is the offset of the GPIO line used for PWM control.
+%   This is the specific GPIO line that the PWM chip uses to control the
+%   enable signal for the PWM output.
 %
-%   @arg PWMChip is the name of a PWM chip, such as pwmchip0, pwmchip1, etc.
-%   This is the chip that uses the GPIO line to control the PWM output.
+%   @arg PWMChip is the name of a  PWM chip, such as pwmchip0, pwmchip1,
+%   etc. This is the chip that uses  the   GPIO  line to control the PWM
+%   output.
 
 sysfs_gpiochip_offset_of_pwmchip(GPIOChip, GPIOOffset, PWMChip) :-
     sysfs_gpiochip_path(GPIOChip, _),
