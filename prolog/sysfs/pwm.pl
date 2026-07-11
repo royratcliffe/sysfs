@@ -145,23 +145,24 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 %!  sysfs_pwm_export(+Chip, ?Export, -Chan) is nondet.
 %
-%   Exports a PWM channel by writing its number to the export file of the Chip.
-%   The Export is a number that identifies the PWM channel, and the Chan is the
-%   name of the file in the sysfs virtual file system that corresponds to the
-%   exported PWM channel, which is of the form pwmN, where N is the number of
-%   the PWM channel. The predicate is nondeterministic and can be backtracked to
-%   export multiple PWM channels for the specified Chip.
+%   Exports a PWM channel by writing its   number  to the export file of
+%   the Chip. The Export is a number   that  identifies the PWM channel,
+%   and the Chan is the name  of  the   file  in  the sysfs virtual file
+%   system that corresponds to the exported PWM channel, which is of the
+%   form pwmN, where N is the number   of the PWM channel. The predicate
+%   is nondeterministic and can be backtracked   to  export multiple PWM
+%   channels for the specified Chip.
 %
-%   @arg Chip is the name of a PWM class device, which is a directory in the
-%   /sys/class/pwm directory that contains a file named `npwm`.
+%   @arg Chip is the name of a PWM class device, which is a directory in
+%   the /sys/class/pwm directory that contains a file named `npwm`.
 %
-%   @arg Export is the number that identifies the exported PWM channel. This is
-%   an integer.
+%   @arg Export is the number that identifies the exported PWM channel.
+%   This is an integer.
 %
-%   @arg Chan is the "name of the file" in the sysfs virtual file system that
-%   corresponds to the exported PWM channel. This is returned as an atom. The
-%   name _excludes_ the directory path, and is of the form pwmN, where N is the
-%   number of the PWM channel.
+%   @arg Chan is the "name of the file" in the sysfs virtual file system
+%   that corresponds to the exported PWM channel. This is returned as an
+%   atom. The name _excludes_ the directory  path,   and  is of the form
+%   pwmN, where N is the number of the PWM channel.
 
 sysfs_pwm_export(Chip, Export, Chan) :-
     sysfs_pwm_chan(Chip, Export, Chan),
