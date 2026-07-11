@@ -113,7 +113,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  * ---+++ Two Arity
  *
- * The predicates sysfs_pwm/3, sysfs_pwm/1, sysfs_pwm_read/2, and sysfs_pwm_write/2 provide a more convenient interface for accessing PWM channels by using a compound term to represent the device and channel. For example:
+ * The  predicates  sysfs_pwm/3,  sysfs_pwm/1,    sysfs_pwm_read/2,  and
+ * sysfs_pwm_write/2 provide a more convenient   interface for accessing
+ * PWM channels by using a compound  term   to  represent the device and
+ * channel. For example:
  *
  * ?- sysfs_pwm(pwmchip0, 0, PWM), sysfs_pwm_read(PWM, period(NS, ns)).
  *
