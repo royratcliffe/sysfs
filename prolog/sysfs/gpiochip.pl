@@ -27,9 +27,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 :- module(sysfs_gpiochip,
-          [ sysfs_gpiochip_path/2, % ?Chip, ?Path
-            sysfs_gpiochip_read/2, % +What:compound, +Term:compound
-            sysfs_gpiochip_read/3  % ?File, ?Chip, -Data
+          [ sysfs_gpiochip_path/2 % ?Chip, ?Path
+          , sysfs_gpiochip_read/2 % +What:compound, +Term:compound
+          , sysfs_gpiochip_read/3 % ?File, ?Chip, -Data
           ]).
 :- use_module(library(sysfs)).
 :- use_module(library(sysfs/read_file)).

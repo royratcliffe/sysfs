@@ -27,9 +27,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 :- module(sysfs_pwmchip,
-          [ sysfs_pwmchip_path/2, % ?Chip, ?Path
-            sysfs_pwmchip_read/2, % +What, +Term
-            sysfs_pwmchip_read/3 % +File, +Chip, -Data
+          [ sysfs_pwmchip_path/2 % ?Chip, ?Path
+          , sysfs_pwmchip_read/2 % +What, +Term
+          , sysfs_pwmchip_read/3 % +File, +Chip, -Data
           ]).
 :- use_module(library(sysfs)).
 :- use_module(read_file).
