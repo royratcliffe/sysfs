@@ -46,8 +46,12 @@ Or clone and use locally.
 
 ## Quick Start
 
-The following examples assume you have a Raspberry Pi with GPIO and PWM chips available.
-Adjust the chip numbers and line/channel offsets to match your hardware.
+The following examples assume you have a Raspberry Pi with GPIO and PWM chips
+available. Adjust the chip numbers and line/channel offsets to match your
+hardware.
+
+Use `debug(sysfs(write_file))` to see the actual sysfs file writes, and use
+`debug(sysfs(read_file))` to see the actual sysfs file reads.
 
 ### Load modules
 
