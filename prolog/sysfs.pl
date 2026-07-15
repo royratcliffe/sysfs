@@ -89,8 +89,8 @@ sysfs_entry(Class, Entry, Entries) :-
     ;   phrase(directory_entry(Directory, Entry), Entries)
     ).
 
-:- setting(sysfs_exported_time_limit, number, 1, 'Time limit for sysfs exported calls in seconds').
-:- setting(sysfs_exported_delay_time, number, 0.01, 'Delay time between sysfs exported call retries in seconds').
+:- setting(exported_time_limit, number, 1, 'Time limit for sysfs exported calls in seconds').
+:- setting(exported_delay_time, number, 0.01, 'Delay time between sysfs exported call retries in seconds').
 
 %!  sysfs_exported_with_time_limit(+File, -Abs, +Options:list) is semidet.
 %
@@ -116,8 +116,8 @@ sysfs_entry(Class, Entry, Entries) :-
 %   limit is reached.
 
 sysfs_exported_with_time_limit(File, Abs, Options) :-
-    setting(sysfs_exported_time_limit, TimeLimit),
-    setting(sysfs_exported_delay_time, DelayTime),
+    setting(exported_time_limit, TimeLimit),
+    setting(exported_delay_time, DelayTime),
     call_with_time_limit(TimeLimit,
                          (   repeat,
                              absolute_file_name(File, Abs, [file_errors(fail)|Options])
