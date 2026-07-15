@@ -27,8 +27,8 @@ Or clone and use locally.
 
 ## What Is Included
 
-- `prolog/sysfs/sysfs.pl`
-  - sysfs root/class discovery and exported-file retry support.
+- `prolog/sysfs.pl`
+  - top-level entry module; defines file search paths (`/sys`, `/sys/class`), the `line_encoding` setting, and the export-retry predicate `sysfs_exported_with_time_limit/3`.
 - `prolog/sysfs/read_file.pl`
   - typed readers: `term`, `bytes`, `number`, `atom`, `line`, `lines`, `big/little` endian forms.
 - `prolog/sysfs/write_file.pl`
@@ -50,19 +50,22 @@ The following examples assume you have a Raspberry Pi with GPIO and PWM chips
 available. Adjust the chip numbers and line/channel offsets to match your
 hardware.
 
-Use `debug(sysfs(write_file))` to see the actual sysfs file writes, and use
-`debug(sysfs(read_file))` to see the actual sysfs file reads.
+Enable debug output with:
+
+```prolog
+?- debug(sysfs(read_file)).   % log every file read
+?- debug(sysfs(write_file)).  % log every file write
+```
 
 ### Load modules
 
 ```prolog
+:- use_module(library(sysfs)).           % core: file-search paths + settings
 :- use_module(library(sysfs/gpiochip)).
 :- use_module(library(sysfs/gpio)).
 :- use_module(library(sysfs/pwmchip)).
 :- use_module(library(sysfs/pwm)).
 ```
-
-If running from this repository checkout directly, adjust load paths as needed.
 
 ### List GPIO chips and labels
 
@@ -131,20 +134,29 @@ Example:
 P = 7.
 ```
 
-## Notes
+## Settings
 
-- Sysfs export operations are asynchronous in the kernel. This pack includes retry-with-time-limit logic when waiting for exported paths.
-- Default settings:
-  - `sysfs_exported_time_limit = 1.0` seconds
-  - `sysfs_exported_delay_time = 0.01` seconds
-- You can override settings with SWI-Prolog `set_setting/2`.
+All settings live in the `sysfs` module and can be changed at runtime with `set_setting/2`:
+
+| Setting | Default | Description |
+|---|---|---|
+| `sysfs:line_encoding` | `ascii` | Encoding used when reading/writing text files (`ascii` or `utf8`) |
+| `sysfs:exported_time_limit` | `1` (s) | How long to wait for a freshly exported GPIO/PWM path to appear |
+| `sysfs:exported_delay_time` | `0.01` (s) | Sleep interval between retries while waiting |
+
+Example:
+
+```prolog
+?- set_setting(sysfs:exported_time_limit, 2).
+?- set_setting(sysfs:line_encoding, utf8).
+```
+
+The retry-with-time-limit behaviour is needed because kernel export is asynchronous — the `/sys` symlink for a GPIO or PWM channel may not appear instantly after writing to the `export` file.
 
 ## Tests and Examples
 
-    - see `prolog/l298.plt`
-    - see `prolog/pca9685_pcm.plt`
-
-These include practical usage patterns for motor-control and PWM scenarios.
+- `prolog/l298.plt` — L298 dual H-bridge motor controller (GPIO + PWM on Raspberry Pi)
+- `prolog/pca9685_pcm.plt` — PCA9685 16-channel PWM servo driver
 
 ## License
 
