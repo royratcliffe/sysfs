@@ -27,11 +27,23 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 :- module(sysfs_endian,
-          [ endian//3,
-            big_endian//2,
-            little_endian//2
+          [ endian//3 % ?BigOrLittle, ?Width, ?Value
+          , big_endian//2 % ?Width, ?Value
+          , little_endian//2 % ?Width, ?Value
           ]).
 :- autoload(library(dcg/basics), [remainder/3]).
+
+/** <module> Big- and Little-Endian Grammars
+ *
+ * This module provides DCG grammars for reading and writing big- and
+ * little-endian integer values of arbitrary bit width (multiples of eight). The grammars
+ * can be used to parse or generate binary data in a platform-independent
+ * manner.
+ *
+ * @author Roy Ratcliffe
+ * @version 1.0
+ * @license MIT
+ */
 
 %!  endian(?BigOrLittle, ?Width, ?Value)// is semidet.
 %
