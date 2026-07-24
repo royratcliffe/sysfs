@@ -27,9 +27,14 @@ pwmchip_by_label(Label, Chip) :- once(sysfs_pwmchip_read(label, Chip, Label)).
 
 gpiochip_by_label(Label, Chip) :- once(sysfs_gpiochip_read(label, Chip, Label)).
 
+% PWM signals for the L298 motor driver. These signals are used to
+% enable the motors and control their speed via PWM.
 pwm_line(en(a), 'pinctrl-bcm2711', 4).
 pwm_line(en(b), 'pinctrl-bcm2711', 17).
 
+% GPIO signals for the L298 motor driver. These signals are used to
+% control the direction of the motors by setting the appropriate GPIO
+% pins high or low.
 gpio_line(in(1), 'pinctrl-bcm2711', 14).
 gpio_line(in(2), 'pinctrl-bcm2711', 15).
 gpio_line(in(3), 'pinctrl-bcm2711', 27).
