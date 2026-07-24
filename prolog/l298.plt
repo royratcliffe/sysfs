@@ -51,10 +51,37 @@ pwm(Signal, PWM) :-
     % hardware configuration.
     sysfs_pwm(PWMChip, 0, PWM).
 
+% Set the PWM period to 50 Hz for all PWM channels used in this
+% configuration.
+:- forall(pwm(_, PWM), sysfs_pwm_write(PWM, period(50, hz))).
+
 gpio_line(Signal, Line) :-
     gpio_line(Signal, Label, Offset),
     gpiochip_by_label(Label, Chip),
     sysfs_gpio_line(Chip, Offset, _, Line).
+
+% Define the forward mappings for the motors. These imply the reverse
+% mappings as well, since reversing a motor simply swaps the GPIO pins
+% used for forward and reverse. The mappings are as follows:
+ahead(port, b, 3, 4).
+ahead(starboard, a, 2, 1).
+
+% Reverse uses the same En signal but swaps the GPIO pins. For motor A,
+% reverse means setting GPIO pin 2 high and GPIO pin 1 low, while for
+% motor B, reverse means setting GPIO pin 4 high and GPIO pin 3 low.
+astern(Abeam, En, InLo, InHi) :- ahead(Abeam, En, InHi, InLo).
+
+bearing(ahead, Abeam, En, InHi, InLo) :- ahead(Abeam, En, InHi, InLo).
+bearing(astern, Abeam, En, InHi, InLo) :- astern(Abeam, En, InHi, InLo).
+
+bearing(ForeAft, Abeam) :-
+    bearing(ForeAft, Abeam, _, InHi, InLo),
+    gpio_line(in(InHi), LineHi),
+    gpio_line(in(InLo), LineLo),
+    % Write the low signal first to avoid stopping the motor driver.
+    % Let it transition from high to low before setting the other line high.
+    sysfs_gpio_write(LineLo, value(0)),
+    sysfs_gpio_write(LineHi, value(1)).
 
 forward(a) :-
     gpio_line(in(1), Line1),
@@ -68,10 +95,10 @@ forward(b) :-
     sysfs_gpio_write(Line3, value(1)).
 
 reverse(a) :-
-    gpio_line(in(2), Line1),
-    gpio_line(in(1), Line2),
-    sysfs_gpio_write(Line2, value(0)),
-    sysfs_gpio_write(Line1, value(1)).
+    gpio_line(in(2), Line2),
+    gpio_line(in(1), Line1),
+    sysfs_gpio_write(Line1, value(0)),
+    sysfs_gpio_write(Line2, value(1)).
 reverse(b) :-
     gpio_line(in(4), Line4),
     gpio_line(in(3), Line3),
@@ -94,5 +121,29 @@ speed(Motor, Percent/Hz) :-
     sysfs_pwm_write(PWM, period(Hz, hz)),
     sysfs_pwm_write(PWM, duty_cycle(Percent, percent)),
     sysfs_pwm_write(PWM, enable(1)).
+
+throttle(Abeam, Fract) :- ahead(Abeam, En, _, _), en(En, Fract).
+
+%! en(En, Fract) is det.
+% Controls an L298 enable pin by fractional duty cycle. The En signal is associated with a specific motor (A or B), and the Fract parameter specifies the duty cycle as a fraction (0 to 1). A positive Fract value enables the motor with the specified duty cycle, while a non-positive value disables the motor.
+% @arg En The enable signal for the motor (a or b).
+% @arg Fract The fractional duty cycle (0 to 1) for the PWM signal controlling the motor speed. A value of 0 or less disables the motor.
+en(En, Fract) :- pwm(en(En), PWM), write_en(PWM, Fract).
+
+write_en(PWM, Fract), Fract > 0 =>
+    sysfs_pwm_write(PWM, duty_cycle(Fract, fract)),
+    sysfs_pwm_write(PWM, enable(1)).
+write_en(PWM, Fract), Fract =< 0 =>
+    sysfs_pwm_write(PWM, enable(0)).
+
+% Steering combines throttle and bearing to control the direction and speed of the motors. The steer predicate takes an Abeam (port or starboard) and a Fract value, which determines the throttle level and direction of the motor. If Fract is positive, it steers ahead; if negative, it steers astern.
+steer(Abeam, Fract) :-
+    throttle(Abeam, 0),
+    steer(Fract, ForeAft, Fract1),
+    throttle(Abeam, Fract1),
+    bearing(ForeAft, Abeam).
+
+steer(Fract, ahead, Fract) :- Fract >= 0, !.
+steer(Fract, astern, -Fract) :- Fract < 0.
 
 :- end_tests(l298).
