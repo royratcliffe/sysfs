@@ -62,7 +62,7 @@ gpio_line(Signal, Line) :-
 
 % Define the forward mappings for the motors. These imply the reverse
 % mappings as well, since reversing a motor simply swaps the GPIO pins
-% used for forward and reverse. The mappings are as follows:
+% used for forward and reverse.
 ahead(port, b, 3, 4).
 ahead(starboard, a, 2, 1).
 
@@ -76,12 +76,23 @@ bearing(astern, Abeam, En, InHi, InLo) :- astern(Abeam, En, InHi, InLo).
 
 bearing(ForeAft, Abeam) :-
     bearing(ForeAft, Abeam, _, InHi, InLo),
+    !,
+    bearing(InHi, InLo, 1, 0).
+bearing(stop(slow), Abeam) :-
+    !,
+    bearing(ahead, Abeam, _, InHi, InLo),
+    bearing(InHi, InLo, 0, 0).
+bearing(stop(fast), Abeam) :-
+    bearing(astern, Abeam, _, InHi, InLo),
+    bearing(InHi, InLo, 1, 1).
+
+bearing(InHi, InLo, Hi, Lo) :-
     gpio_line(in(InHi), LineHi),
     gpio_line(in(InLo), LineLo),
     % Write the low signal first to avoid stopping the motor driver.
     % Let it transition from high to low before setting the other line high.
-    sysfs_gpio_write(LineLo, value(0)),
-    sysfs_gpio_write(LineHi, value(1)).
+    sysfs_gpio_write(LineLo, value(Lo)),
+    sysfs_gpio_write(LineHi, value(Hi)).
 
 throttle(Abeam, Fract) :- ahead(Abeam, En, _, _), en(En, Fract).
 
@@ -95,6 +106,7 @@ write_en(PWM, Fract), Fract > 0 =>
     sysfs_pwm_write(PWM, duty_cycle(Fract, fract)),
     sysfs_pwm_write(PWM, enable(1)).
 write_en(PWM, Fract), Fract =< 0 =>
+    % Assume that disabling the PWM signal lowers the Enable pin, effectively stopping the motor regardless of its Input pins.
     sysfs_pwm_write(PWM, enable(0)).
 
 % Steering combines throttle and bearing to control the direction and speed of the motors. The steer predicate takes an Abeam (port or starboard) and a Fract value, which determines the throttle level and direction of the motor. If Fract is positive, it steers ahead; if negative, it steers astern.
@@ -104,7 +116,8 @@ steer(Abeam, Fract) :-
     throttle(Abeam, Fract1),
     bearing(ForeAft, Abeam).
 
-steer(Fract, ahead, Fract) :- Fract >= 0, !.
-steer(Fract, astern, -Fract) :- Fract < 0.
+steer(Fract, ahead, Fract) :- Fract >= 0.1, !.
+steer(Fract, astern, -Fract) :- Fract =< -0.1, !.
+steer(_, stop(slow), 0).
 
 :- end_tests(l298).
