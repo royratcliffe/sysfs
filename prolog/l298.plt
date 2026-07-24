@@ -109,7 +109,12 @@ write_en(PWM, Fract), Fract =< 0 =>
     % Assume that disabling the PWM signal lowers the Enable pin, effectively stopping the motor regardless of its Input pins.
     sysfs_pwm_write(PWM, enable(0)).
 
+%! steer(Abeam, Fract) is det.
+%
 % Steering combines throttle and bearing to control the direction and speed of the motors. The steer predicate takes an Abeam (port or starboard) and a Fract value, which determines the throttle level and direction of the motor. If Fract is positive, it steers ahead; if negative, it steers astern.
+%
+% @arg Abeam The side of the vehicle (port or starboard) to steer.
+% @arg Fract The fractional throttle value, where positive values indicate forward motion and negative values indicate reverse motion. The value is clamped to a minimum of 0.1 for forward and a maximum of -0.1 for reverse to prevent stalling or abrupt stops.
 steer(Abeam, Fract) :-
     throttle(Abeam, 0),
     steer(Fract, ForeAft, Fract1),
