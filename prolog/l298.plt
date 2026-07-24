@@ -97,24 +97,41 @@ bearing(InHi, InLo, Hi, Lo) :-
 throttle(Abeam, Fract) :- ahead(Abeam, En, _, _), en(En, Fract).
 
 %! en(En, Fract) is det.
-% Controls an L298 enable pin by fractional duty cycle. The En signal is associated with a specific motor (A or B), and the Fract parameter specifies the duty cycle as a fraction (0 to 1). A positive Fract value enables the motor with the specified duty cycle, while a non-positive value disables the motor.
+%
+% Controls an L298 enable pin by fractional duty cycle. The En signal is
+% associated with a specific motor (A or B), and the Fract parameter
+% specifies the duty cycle as a fraction (0 to 1). A positive Fract
+% value enables the motor with the specified duty cycle, while a
+% non-positive value disables the motor.
+%
 % @arg En The enable signal for the motor (a or b).
-% @arg Fract The fractional duty cycle (0 to 1) for the PWM signal controlling the motor speed. A value of 0 or less disables the motor.
+%
+% @arg Fract The fractional duty cycle (0 to 1) for the PWM signal
+% controlling the motor speed. A value of 0 or less disables the motor.
 en(En, Fract) :- pwm(en(En), PWM), write_en(PWM, Fract).
 
 write_en(PWM, Fract), Fract > 0 =>
     sysfs_pwm_write(PWM, duty_cycle(Fract, fract)),
     sysfs_pwm_write(PWM, enable(1)).
 write_en(PWM, Fract), Fract =< 0 =>
-    % Assume that disabling the PWM signal lowers the Enable pin, effectively stopping the motor regardless of its Input pins.
+    % Assume that disabling the PWM signal lowers the Enable pin, effectively
+    % stopping the motor regardless of its Input pins.
     sysfs_pwm_write(PWM, enable(0)).
 
 %! steer(Abeam, Fract) is det.
 %
-% Steering combines throttle and bearing to control the direction and speed of the motors. The steer predicate takes an Abeam (port or starboard) and a Fract value, which determines the throttle level and direction of the motor. If Fract is positive, it steers ahead; if negative, it steers astern.
+% Steering combines throttle and bearing to control the direction and
+% speed of the motors. The steer predicate takes an Abeam (port or
+% starboard) and a Fract value, which determines the throttle level and
+% direction of the motor. If Fract is positive, it steers ahead; if
+% negative, it steers astern.
 %
 % @arg Abeam The side of the vehicle (port or starboard) to steer.
-% @arg Fract The fractional throttle value, where positive values indicate forward motion and negative values indicate reverse motion. The value is clamped to a minimum of 0.1 for forward and a maximum of -0.1 for reverse to prevent stalling or abrupt stops.
+%
+% @arg Fract The fractional throttle value, where positive values
+% indicate forward motion and negative values indicate reverse motion.
+% The value is clamped to a minimum of 0.1 for forward and a maximum of
+% -0.1 for reverse to prevent stalling or abrupt stops.
 steer(Abeam, Fract) :-
     throttle(Abeam, 0),
     steer(Fract, ForeAft, Fract1),
