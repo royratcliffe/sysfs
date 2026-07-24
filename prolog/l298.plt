@@ -135,7 +135,13 @@ write_en(PWM, Fract), Fract =< 0 =>
 steer(Abeam, Fract) :-
     throttle(Abeam, 0),
     steer(Fract, ForeAft, Fract1),
-    throttle(Abeam, Fract1),
+    % If the fractional throttle is non-zero, apply it to the specified Abeam
+    % side. This ensures that the motor is only reactivated when there is a
+    % meaningful throttle value.
+    (   Fract1 =\= 0
+    ->  throttle(Abeam, Fract1)
+    ;   true
+    ),
     bearing(ForeAft, Abeam).
 
 steer(Fract, ahead, Fract) :- Fract >= 0.1, !.
