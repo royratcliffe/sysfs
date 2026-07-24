@@ -83,45 +83,6 @@ bearing(ForeAft, Abeam) :-
     sysfs_gpio_write(LineLo, value(0)),
     sysfs_gpio_write(LineHi, value(1)).
 
-forward(a) :-
-    gpio_line(in(1), Line1),
-    gpio_line(in(2), Line2),
-    sysfs_gpio_write(Line2, value(0)),
-    sysfs_gpio_write(Line1, value(1)).
-forward(b) :-
-    gpio_line(in(3), Line3),
-    gpio_line(in(4), Line4),
-    sysfs_gpio_write(Line4, value(0)),
-    sysfs_gpio_write(Line3, value(1)).
-
-reverse(a) :-
-    gpio_line(in(2), Line2),
-    gpio_line(in(1), Line1),
-    sysfs_gpio_write(Line1, value(0)),
-    sysfs_gpio_write(Line2, value(1)).
-reverse(b) :-
-    gpio_line(in(4), Line4),
-    gpio_line(in(3), Line3),
-    sysfs_gpio_write(Line4, value(0)),
-    sysfs_gpio_write(Line3, value(1)).
-
-stop(a) :-
-    gpio_line(in(2), Line1),
-    gpio_line(in(1), Line2),
-    sysfs_gpio_write(Line2, value(0)),
-    sysfs_gpio_write(Line1, value(0)).
-stop(b) :-
-    gpio_line(in(4), Line4),
-    gpio_line(in(3), Line3),
-    sysfs_gpio_write(Line4, value(0)),
-    sysfs_gpio_write(Line3, value(0)).
-
-speed(Motor, Percent/Hz) :-
-    pwm(en(Motor), PWM),
-    sysfs_pwm_write(PWM, period(Hz, hz)),
-    sysfs_pwm_write(PWM, duty_cycle(Percent, percent)),
-    sysfs_pwm_write(PWM, enable(1)).
-
 throttle(Abeam, Fract) :- ahead(Abeam, En, _, _), en(En, Fract).
 
 %! en(En, Fract) is det.
